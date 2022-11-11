@@ -1,10 +1,10 @@
-    //c para clave usuario (15)(#Aa)•
-    //nt para numero tarjeta (12)(#)•
-    //ct para clave tarjeta (4)(#)•
-    //n para nuemro de cuenta, producto, abono, trsnferencia, deposito(10)(#)
+//c para clave usuario (15)(#Aa)•
+//nt para numero tarjeta (12)(#)•
+//ct para clave tarjeta (4)(#)•
+//n para nuemro de cuenta, producto, abono, trsnferencia, deposito(10)(#)
 const creaContrasena = (x) => {
     let l = 0;
-    let lista ="";
+    let lista = "";
     if (x == "c") {
         lista = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
         l = 15;

@@ -13,34 +13,45 @@
 •Fecha de actualización)
 */
 
-const {Schema,model}=require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const UsuarioSchema =Schema({
+const UsuarioSchema = Schema({
     tipoDocumento: {
-        type: String, required: true, enum: ['CC','TI','NIT','CE']},
+        type: String, required: true, enum: ['CC', 'TI', 'NIT', 'CE']
+    },
     documento: {
-        type: String, required: true, unique: true,},    
+        type: String, required: true, unique: true,
+    },
     nombre: {
-        type: String, required: true,},
+        type: String, required: true,
+    },
     apellido: {
-        type: String, required: true,},
+        type: String, required: true,
+    },
     email: {
-        type: String, required: true, unique: true,},
+        type: String, required: true, unique: true,
+    },
     contrasena: {
-        type: String, required: true,},
+        type: String, required: true,
+    },
     telefono: {
-        type: String, required: true,},
+        type: String, required: true,
+    },
     rol: {
-        type: String, required: true, enum: ['Admin','Asesor','Cliente']},
+        type: String, required: true, enum: ['Admin', 'Asesor', 'Cliente']
+    },
     estado: {
-        type: String, required: true, enum: ['Activo','Inactivo']},
+        type: String, required: true, enum: ['Activo', 'Inactivo']
+    },
     fechaCreacion: {
-        type: Date, required: true,},
+        type: Date, required: true,
+    },
     fechaActualizacion: {
-        type: Date, required: true,}    
+        type: Date, required: true,
+    }
 });
 
-module.exports= model ('Usuario',UsuarioSchema);
+module.exports = model('Usuario', UsuarioSchema);
 
 
 

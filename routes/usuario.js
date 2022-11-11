@@ -19,7 +19,7 @@ const Usuario = require('../models/Usuario')
 const bcrypt = require('bcryptjs');
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validarRolAdmin } = require('../middlewares/validar-rol-admin');
-const {creaContrasena}=require('../helpers/generador')
+const { creaContrasena } = require('../helpers/generador')
 
 const router = Router();
 
