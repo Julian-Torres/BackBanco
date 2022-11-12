@@ -4,9 +4,11 @@ const cors = require('cors');
 const UsuarioRoute = require('./routes/usuario');
 const AuthRoute = require('./routes/auth');
 
-getConnection();
-
 const app = express();
+const port =4000;
+
+getConnection(); 
+
 //cors
 app.use(cors());
 //json
@@ -17,6 +19,6 @@ app.use('/usuario', UsuarioRoute);
 app.use('/login', AuthRoute);
 
 //server
-app.listen(4000, () => {
-    console.log('Server ON');
+app.listen(port, () => {
+    console.log('Server ON on port', port);
 });
