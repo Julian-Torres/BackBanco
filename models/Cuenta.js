@@ -20,7 +20,7 @@ const CuentaSchema = Schema({
     tipo: {
         type: String, required: true, enum: ['Ahorros', 'Corriente']
     },
-    valor: {
+    saldo: {
         type: Number, required: true,
     },
     tarjeta: {

@@ -13,10 +13,10 @@ const TransferenciaSchema = Schema({
         type: String, required: true, maxLength: 10, minLength: 10,
     },
     cuentaOrigen: {
-        type: Schema.Types.ObjectId, ref: 'Ceunta', required: true,
+        type: Schema.Types.ObjectId, ref: 'Cuenta', required: true,
     },
     cuentaDestino: {
-        type: Schema.Types.ObjectId, ref: 'Ceunta', required: true,
+        type: Schema.Types.ObjectId, ref: 'Cuenta', required: true,
     },
     valor: {
         type: Number, required: true,
@@ -24,9 +24,6 @@ const TransferenciaSchema = Schema({
     fechaCreacion: {
         type: Date, required: true,
     },
-    fechaActualizacion: {
-        type: Date, required: true,
-    }
 });
 
 module.exports = model('Transferencia', TransferenciaSchema);

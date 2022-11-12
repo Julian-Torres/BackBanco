@@ -33,7 +33,7 @@ const ProductoSchema = Schema({
     fechaCorte: {
         type: Number, required: true, enum: [1, 15, 25]
     },
-    Tarjeta: {
+    tarjeta: {
         type: Schema.Types.ObjectId, ref: 'Tarjeta', required: false,
     },
     estado: {

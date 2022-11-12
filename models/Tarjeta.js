@@ -11,9 +11,6 @@ const TarjetaSchema = Schema({
     numeroPlastico: {
         type: String, required: true, maxLength: 12, minLength: 12,
     },
-    documento: {
-        type: String, required: true, unique: true,
-    },
     franquicia: {
         type: String, required: true, enum: ['Visa', 'MasterCard', 'American Express','Dinners Club']
     },

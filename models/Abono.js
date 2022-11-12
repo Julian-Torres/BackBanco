@@ -28,9 +28,6 @@ const AbonoSchema = Schema({
     fechaCreacion: {
         type: Date, required: true,
     },
-    fechaActualizacion: {
-        type: Date, required: true,
-    }
 });
 
 module.exports = model('Abono', AbonoSchema);
