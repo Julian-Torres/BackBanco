@@ -22,7 +22,7 @@ const AbonoSchema = Schema({
     medioPago: {
         type: String, required: true, enum: ['Efectivo', 'Tarjeta débito']
     },
-    Tarjeta: {
+    tarjeta: {
         type: Schema.Types.ObjectId, ref: 'Tarjeta', required: false,
     },
     fechaCreacion: {
