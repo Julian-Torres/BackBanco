@@ -2,6 +2,15 @@ const express = require('express');
 const { getConnection } = require('./db/db-config');
 const cors = require('cors');
 const UsuarioRoute = require('./routes/usuario');
+const AbonoRoute = require('./routes/abono');
+const CuentaRoute = require('./routes/cuenta');
+const DepositoRoute = require('./routes/deposito');
+const ProductoRoute = require('./routes/producto');
+const TarjetaRoute = require('./routes/tarjeta');
+const TransferenciaRoute = require('./routes/transferencia');
+
+
+
 const AuthRoute = require('./routes/auth');
 
 const app = express();
@@ -16,6 +25,13 @@ app.use(express.json());
 
 //rutas
 app.use('/usuario', UsuarioRoute);
+app.use('/abono', AbonoRoute);
+app.use('/abono', CuentaRoute);
+app.use('/abono', DepositoRoute);
+app.use('/abono', ProductoRoute);
+app.use('/abono', TarjetaRoute);
+app.use('/abono', TransferenciaRoute);
+
 app.use('/login', AuthRoute);
 
 //server
