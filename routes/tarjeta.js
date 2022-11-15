@@ -12,7 +12,7 @@ const router = Router();
 router.post('/',
     [
         check('numeroTarjeta', 'Numero de tarjeta invalido').not().isEmpty(),
-        check('franquicia', 'Franquicia Invalida').isIn(['Visa', 'MasterCard', 'American Express','Dinners Club']),
+        check('franquicia', 'Franquicia Invalida').isIn(['Visa', 'MasterCard', 'American Express', 'Dinners Club']),
         check('tipo', 'Tipo Invalido').isIn(['Crédito', 'Débito']),
         validarJWT,
         validarRol
@@ -39,12 +39,10 @@ router.post('/',
             const clave = creaContrasena("ct");
             console.log(clave);
             tarjeta.clave = bcrypt.hashSync(clave, salt);
-
             tarjeta.fechaCreacion = new Date();
             tarjeta.fechaActualizacion = new Date();
 
             tarjeta = await tarjeta.save();
-
             res.send(tarjeta);
 
         } catch (error) {

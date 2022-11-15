@@ -23,8 +23,6 @@ router.post('/',
         ]),
         validarJWT,
 
-        //falta añadir el abono al producto *preguntar como se lelva registro de la cantidad total pagada*
-
     ], async function (req, res) {
         try {
             console.log(req.body);
@@ -45,18 +43,18 @@ router.post('/',
                 }
             }
 
-             //validar producto existe
-             const existeProducto = await Producto.findOne({ numeroProducto: req.body.producto });
-             if (existeProducto) {
-                 return res.status(400).json({ mensaje: 'Producto inexistente' })
-             }            
+            //validar producto existe
+            const existeProducto = await Producto.findOne({ numeroProducto: req.body.producto });
+            if (existeProducto) {
+                return res.status(400).json({ mensaje: 'Producto inexistente' })
+            }
 
             //validar tarjeta existe si es encesario
-            if(req.body.tarjeta!=null){
+            if (req.body.tarjeta != null) {
                 const existeTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.tarjeta });
                 if (!existeTarjeta) {
                     return res.status(400).json({ mensaje: 'Tarjeta inexistente' })
-                } 
+                }
             }
 
             let abono = new Abono();
@@ -68,8 +66,8 @@ router.post('/',
             abono.fechaCreacion = new Date();
 
             abono = await abono.save();
-
             res.send(abono);
+            //falta añadir el abono al producto *preguntar como se lelva registro de la cantidad total pagada*
 
         } catch (error) {
             console.log(error);

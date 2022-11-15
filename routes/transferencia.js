@@ -36,14 +36,20 @@ router.post('/',
             const existeCuentaOrigen = await Cuenta.findOne({ numeroCuenta: req.body.cuentaOrigen });
             if (!existeCuentaOrigen) {
                 return res.status(400).json({ mensaje: 'Revisa Cuenta Origen' })
-            }            
-             //validar cuentaDestino existe
-             const existeCuentaDestino = await Cuenta.findOne({ numeroCuenta: req.body.cuentaDestino });
-             if (!existeCuentaDestino) {
-                 return res.status(400).json({ mensaje: 'Revisa Cuenta Destino' })
-             }           
+            }
+            //validar cuentaDestino existe
+            const existeCuentaDestino = await Cuenta.findOne({ numeroCuenta: req.body.cuentaDestino });
+            if (!existeCuentaDestino) {
+                return res.status(400).json({ mensaje: 'Revisa Cuenta Destino' })
+            }
 
-            let transferencia = new  Transferencia();
+            //Validar fondos cuenta origen
+            const fondosCuentaOrigen = await Cuenta.findOne({ numeroCuenta: req.body.cuentaOrigen });
+            if (!(fondosCuentaOrigen.saldo > req.body.valor)) {
+                return res.status(400).json({ mensaje: 'Fondos insuficientes' })
+            }
+
+            let transferencia = new Transferencia();
             transferencia.numeroTransferencia = numero;
             transferencia.cuentaOrigen = req.body.cuentaOrigen;
             transferencia.cuentaDestino = req.body.cuentaDestino;
@@ -51,10 +57,9 @@ router.post('/',
             transferencia.fechaCreacion = new Date();
 
             transferencia = await transferencia.save();
-
             res.send(transferencia);
 
-            //falta validar fondos suficientes y aplicar la treansferencia entre cuentas
+            //falta aplicar la treansferencia entre cuentas
 
         } catch (error) {
             console.log(error);

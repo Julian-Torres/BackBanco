@@ -35,24 +35,21 @@ router.post('/',
                     console.log(numero);
                 }
             }
-            
             //validar existe usuario
-            const existeUsuario=await Usuario.findOne({documento:req.body.usuario});
-            if(!existeUsuario){
+            const existeUsuario = await Usuario.findOne({ documento: req.body.usuario });
+            if (!existeUsuario) {
                 return res.status(400).send('Usuario inexistente');
             }
             //validar existe tarjeta
-            const existeTarjeta=await Tarjeta.findOne({numeroPlastico:req.body.tarjeta});
-            if(!existeTarjeta){
+            const existeTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.tarjeta });
+            if (!existeTarjeta) {
                 return res.status(400).send('Tarjeta inexistente');
             }
-
             //validar uso unico tarjeta
             const usoTarjeta = await Cuenta.findOne({ tarjeta: req.body.tarjeta });
             if (usoTarjeta) {
                 return res.status(400).json({ mensaje: 'Tarjeta ya en uso' })
             }
-            
             let cuenta = new Cuenta();
             cuenta.numeroCuenta = numero;
             cuenta.usuario = req.body.usuario;
@@ -64,7 +61,6 @@ router.post('/',
             cuenta.fechaActualizacion = new Date();
 
             cuenta = await cuenta.save();
-
             res.send(cuenta);
 
         } catch (error) {

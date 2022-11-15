@@ -46,18 +46,18 @@ router.post('/',
                     console.log(numero);
                 }
             }
-             //validar usuario existe
-             const existeUsuario = await Usuario.findOne({ documento: req.body.usuario });
-             if (!existeUsuario) {
-                 return res.status(400).json({ mensaje: 'Usuario inexistente' })
-             }  
+            //validar usuario existe
+            const existeUsuario = await Usuario.findOne({ documento: req.body.usuario });
+            if (!existeUsuario) {
+                return res.status(400).json({ mensaje: 'Usuario inexistente' })
+            }
 
-             //validar si tarjeta existe si es necesario
-            if(req.body.tarjeta!=null){
+            //validar si tarjeta existe si es necesario
+            if (req.body.tarjeta != null) {
                 const existeTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.tarjeta });
                 if (!existeTarjeta) {
                     return res.status(400).json({ mensaje: 'Tarjeta inexistente' })
-                } 
+                }
             }
 
             let producto = new Producto();
@@ -73,7 +73,6 @@ router.post('/',
             producto.fechaActualizacion = new Date();
 
             producto = await producto.save();
-
             res.send(producto);
 
         } catch (error) {

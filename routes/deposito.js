@@ -13,9 +13,6 @@ router.post('/',
         check('cuentaDestino', 'Cuenta Invalida').not().isEmpty(),
         check('valor', 'Valor Invalido').not().isEmpty().isNumeric(),
         validarJWT,
-
-        //falta añadir el deposito a la cuenta
-
     ], async function (req, res) {
         try {
             console.log(req.body);
@@ -34,12 +31,11 @@ router.post('/',
                     console.log(numero);
                 }
             }
-
-             //validar cuenta existe
-             const existeCuentaDestino = await Cuenta.findOne({ numeroCuenta: req.body.cuentaDestino });
-             if (existeCuentaDestino) {
-                 return res.status(400).json({ mensaje: 'Revisa Cuenta Origen' })
-             } 
+            //validar cuenta existe
+            const existeCuentaDestino = await Cuenta.findOne({ numeroCuenta: req.body.cuentaDestino });
+            if (existeCuentaDestino) {
+                return res.status(400).json({ mensaje: 'Revisa Cuenta Origen' })
+            }
 
             let deposito = new Deposito();
             deposito.numeroDeposito = numero;
@@ -48,9 +44,9 @@ router.post('/',
             deposito.fechaCreacion = new Date();
 
             deposito = await deposito.save();
-
+            //falta añadir el deposito a la cuenta
             res.send(deposito);
-
+ 
         } catch (error) {
             console.log(error);
             res.status(500).json({ mensaje: 'Error de servidor' })

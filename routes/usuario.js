@@ -68,12 +68,10 @@ router.post('/',
             const contrasena = creaContrasena("c");
             console.log(contrasena);
             usuario.contrasena = bcrypt.hashSync(contrasena, salt);
-
             usuario.fechaCreacion = new Date();
             usuario.fechaActualizacion = new Date();
 
             usuario = await usuario.save();
-
             res.send(usuario);
 
         } catch (error) {
