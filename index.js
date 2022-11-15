@@ -9,10 +9,7 @@ const ProductoRoute = require('./routes/producto');
 const TarjetaRoute = require('./routes/tarjeta');
 const TransferenciaRoute = require('./routes/transferencia');
 
-
-
 const AuthRoute = require('./routes/auth');
-
 const app = express();
 const port =4000;
 

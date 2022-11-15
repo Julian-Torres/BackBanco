@@ -23,63 +23,64 @@ const { creaContrasena } = require('../helpers/generador')
 
 const router = Router();
 
+//-----------------------------------------------------------------------
 //crear usuario
-router.post('/',
-    [
-        check('tipoDocumento', 'Tipo de documento Invalido').isIn(['CC', 'TI', 'NIT', 'CE']),
-        check('documento', 'Documento Invalido').not().isEmpty(),
-        check('nombre', 'Nombre Invalido').not().isEmpty(),
-        check('apellido', 'Apellido Invalido').not().isEmpty(),
-        check('telefono', 'Telefono Invalido').not().isEmpty(),
-        check('email', 'Email Invalido').isEmail(),
-        check('rol', 'Rol Invalido').isIn(['Admin', 'Asesor', 'Cliente']),
-        check('estado', 'Estado Invalido').isIn(['Activo', 'Inactivo']),
-        validarJWT,
-        validarRolAdmin
-    ], async function (req, res) {
-        try {
-            console.log(req.body);
-            //validar campos
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ mensaje: errors.array() });
-            }
-            //validar documento unico
-            const existeDocumento = await Usuario.findOne({ documento: req.body.documento });
-            if (existeDocumento) {
-                return res.status(400).json({ mensaje: 'Documento ya existe' })
-            }
-            //validar Email unico
-            const existeEmail = await Usuario.findOne({ email: req.body.email });
-            if (existeEmail) {
-                return res.status(400).json({ mensaje: 'Email ya existe' })
-            }
-            let usuario = new Usuario();
-            usuario.tipoDocumento = req.body.tipoDocumento;
-            usuario.documento = req.body.documento;
-            usuario.nombre = req.body.nombre;
-            usuario.apellido = req.body.apellido;
-            usuario.telefono = req.body.telefono;
-            usuario.email = req.body.email;
-            usuario.rol = req.body.rol;
-            usuario.estado = req.body.estado;
+router.post('/', [
+    check('tipoDocumento', 'Tipo de documento Invalido').isIn(['CC', 'TI', 'NIT', 'CE']),
+    check('documento', 'Documento Invalido').not().isEmpty(),
+    check('nombre', 'Nombre Invalido').not().isEmpty(),
+    check('apellido', 'Apellido Invalido').not().isEmpty(),
+    check('telefono', 'Telefono Invalido').not().isEmpty(),
+    check('email', 'Email Invalido').isEmail(),
+    check('rol', 'Rol Invalido').isIn(['Admin', 'Asesor', 'Cliente']),
+    check('estado', 'Estado Invalido').isIn(['Activo', 'Inactivo']),
+    validarJWT,
+    validarRolAdmin,
+], async function (req, res) {
+    console.log(req.body);
+    try {
+        //validar campos
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ mensaje: errors.array() });
+        }
+        //validar documento unico
+        const existeDocumento = await Usuario.findOne({ documento: req.body.documento });
+        if (existeDocumento) {
+            return res.status(400).json({ mensaje: 'Documento ya existe' })
+        }
+        //validar Email unico
+        const existeEmail = await Usuario.findOne({ email: req.body.email });
+        if (existeEmail) {
+            return res.status(400).json({ mensaje: 'Email ya existe' })
+        }
 
+        let usuario = new Usuario();
+        usuario.tipoDocumento = req.body.tipoDocumento;
+        usuario.documento = req.body.documento;
+        usuario.nombre = req.body.nombre;
+        usuario.apellido = req.body.apellido;
+        usuario.email = req.body.email;
             const salt = bcrypt.genSaltSync();
             const contrasena = creaContrasena("c");
             console.log(contrasena);
-            usuario.contrasena = bcrypt.hashSync(contrasena, salt);
-            usuario.fechaCreacion = new Date();
-            usuario.fechaActualizacion = new Date();
+        usuario.contrasena = bcrypt.hashSync(contrasena, salt);
+        usuario.telefono = req.body.telefono;
+        usuario.rol = req.body.rol;
+        usuario.estado = req.body.estado;
+        usuario.fechaCreacion = new Date();
+        usuario.fechaActualizacion = new Date();
 
-            usuario = await usuario.save();
-            res.send(usuario);
+        usuario = await usuario.save();
+        res.send(usuario);
 
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({ mensaje: 'Error de servidor' })
-        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensaje: 'Error de servidor' })
     }
+}
 );
+//-----------------------------------------------------------------------
 //listar usuarios
 router.get('/', [validarJWT], async function (req, res) {
     try {
@@ -91,5 +92,7 @@ router.get('/', [validarJWT], async function (req, res) {
         res.status(500).send({ menseaje: 'Error de servidor' })
     }
 })
+//-----------------------------------------------------------------------
+//editar usuarios
 
 module.exports = router;
