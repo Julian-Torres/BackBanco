@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { check, validationResult } = require('express-validator');
+const { oneOf,check, validationResult } = require('express-validator');
 const Abono = require('../models/Abono')
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { creaContrasena } = require('../helpers/generador')

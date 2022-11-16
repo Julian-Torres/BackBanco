@@ -18,7 +18,7 @@ const { check, validationResult } = require('express-validator');
 const Usuario = require('../models/Usuario')
 const bcrypt = require('bcryptjs');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const { validarRolAdmin } = require('../middlewares/validar-rol-admin');
+const { validarRol } = require('../middlewares/validar-rol-admin');
 const { creaContrasena } = require('../helpers/generador')
 
 const router = Router();
@@ -35,7 +35,7 @@ router.post('/', [
     check('rol', 'Rol Invalido').isIn(['Admin', 'Asesor', 'Cliente']),
     check('estado', 'Estado Invalido').isIn(['Activo', 'Inactivo']),
     validarJWT,
-    validarRolAdmin,
+    validarRol,
 ], async function (req, res) {
     console.log(req.body);
     try {

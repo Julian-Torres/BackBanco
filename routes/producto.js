@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { check, validationResult } = require('express-validator');
+const { oneOf, check, validationResult } = require('express-validator');
 const Producto = require('../models/Producto')
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validarRol } = require('../middlewares/validar-rol-admin');
