@@ -11,7 +11,7 @@ const router = Router();
 //crear usuario
 router.post('/',
     [
-        check('numeroTarjeta', 'Numero de tarjeta invalido').not().isEmpty(),
+        check('numeroPlastico', 'Numero de tarjeta invalido').isNumeric().isLength({ max: 12}).isLength({ min: 12}),
         check('franquicia', 'Franquicia Invalida').isIn(['Visa', 'MasterCard', 'American Express', 'Dinners Club']),
         check('tipo', 'Tipo Invalido').isIn(['Crédito', 'Débito']),
         validarJWT,
@@ -25,13 +25,13 @@ router.post('/',
                 return res.status(400).json({ mensaje: errors.array() });
             }
             //validar numeroTarjeta unico
-            const existeNumeroTarjeta = await Tarjeta.findOne({ tarjeta: req.body.numeroTarjeta });
+            const existeNumeroTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.numeroPlastico });
             if (existeNumeroTarjeta) {
                 return res.status(400).json({ mensaje: 'Numero de tarjeta ya existe' })
             }
 
             let tarjeta = new Tarjeta();
-            tarjeta.numeroTarjeta = req.body.numeroTarjeta;
+            tarjeta.numeroPlastico = req.body.numeroPlastico;
             tarjeta.franquicia = req.body.franquicia;
             tarjeta.tipo = req.body.tipo;
 

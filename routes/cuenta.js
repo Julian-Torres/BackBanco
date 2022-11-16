@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const Cuenta = require('../models/Cuenta')
+const Usuario = require('../models/Usuario')
+const Tarjeta = require('../models/Tarjeta')
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validarRol } = require('../middlewares/validar-rol-admin');
 const { creaContrasena } = require('../helpers/generador')
@@ -27,35 +29,26 @@ router.post('/',
             }
             //validar creacion numeroCuenta unico
             let existe = true;
-            while (existe = true) {
-                const numero = creaContrasena("n");
+            while (existe == true) {
+                numero = creaContrasena("n");
                 const existeNumeroCuenta = await Cuenta.findOne({ numeroCuenta: numero });
                 if (!existeNumeroCuenta) {
-                    existe = false;
                     console.log(numero);
+                    existe = false;
                 }
             }
-            //validar existe usuario
-            const existeUsuario = await Usuario.findOne({ documento: req.body.usuario });
-            if (!existeUsuario) {
-                return res.status(400).send('Usuario inexistente');
-            }
-            //validar existe tarjeta
-            const existeTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.tarjeta });
-            if (!existeTarjeta) {
-                return res.status(400).send('Tarjeta inexistente');
-            }
+
             //validar uso unico tarjeta
-            const usoTarjeta = await Cuenta.findOne({ tarjeta: req.body.tarjeta });
+            const usoTarjeta = await Cuenta.findOne({ tarjeta: req.body.tarjeta._id });
             if (usoTarjeta) {
                 return res.status(400).json({ mensaje: 'Tarjeta ya en uso' })
             }
             let cuenta = new Cuenta();
             cuenta.numeroCuenta = numero;
-            cuenta.usuario = req.body.usuario;
+            cuenta.usuario = req.body.usuario._id;
             cuenta.tipo = req.body.tipo;
             cuenta.saldo = req.body.saldo;
-            cuenta.tarjeta = req.body.tarjeta;
+            cuenta.tarjeta = req.body.tarjeta._id;
             cuenta.estado = req.body.estado;
             cuenta.fechaCreacion = new Date();
             cuenta.fechaActualizacion = new Date();
@@ -72,7 +65,10 @@ router.post('/',
 //listar cuentas
 router.get('/', [validarJWT], async function (req, res) {
     try {
-        const cuentas = await Cuenta.find();
+        const cuentas = await Cuenta.find().populate([
+            { path: 'usuario', select: 'documento nombre apellido email' },
+            { path: 'tarjeta', select: 'numeroPlastico' }
+        ]);
         res.send(cuentas);
 
     } catch (error) {

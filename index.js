@@ -23,11 +23,11 @@ app.use(express.json());
 //rutas
 app.use('/usuario', UsuarioRoute);
 app.use('/abono', AbonoRoute);
-app.use('/abono', CuentaRoute);
-app.use('/abono', DepositoRoute);
-app.use('/abono', ProductoRoute);
-app.use('/abono', TarjetaRoute);
-app.use('/abono', TransferenciaRoute);
+app.use('/cuenta', CuentaRoute);
+app.use('/deposito', DepositoRoute);
+app.use('/producto', ProductoRoute);
+app.use('/tarjeta', TarjetaRoute);
+app.use('/transferencia', TransferenciaRoute);
 
 app.use('/login', AuthRoute);
 

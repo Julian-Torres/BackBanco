@@ -18,7 +18,7 @@ const TarjetaSchema = Schema({
         type: String, required: true, enum: ['Crédito', 'Débito']
     },
     clave: {
-        type: String, required: true, maxLength: 4, minLength: 4,
+        type: String, required: true,
     },
     fechaCreacion: {
         type: Date, required: true,

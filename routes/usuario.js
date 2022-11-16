@@ -93,6 +93,6 @@ router.get('/', [validarJWT], async function (req, res) {
     }
 })
 //-----------------------------------------------------------------------
-//editar usuarios
+//editar usuarios video 29
 
 module.exports = router;
