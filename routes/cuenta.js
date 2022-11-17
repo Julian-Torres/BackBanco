@@ -74,5 +74,32 @@ router.get('/', [validarJWT], async function (req, res) {
         res.status(500).send({ mensaje: 'Error de servidor' })
     }
 })
+// editar cuenta
+router.put('/:cuentaId',[check('estado', 'Estado Invalido').isIn(['Activo', 'Inactivo']),validarJWT,validarRol], async function (req, res) {
+        try {
+            console.log(req.body);
+            //validar campos
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ mensaje: errors.array() });
+            }
 
+            //llamar cuenta
+            let cuenta = await Cuenta.findById(req.params.cuentaId);
+            if (!cuenta) {
+                return res.status(400).json({ mensaje: 'Cuenta no existe' })
+            }
+
+            cuenta.estado = req.body.estado;
+            cuenta.fechaActualizacion = new Date();
+
+            cuenta = await cuenta.save();
+            res.send(cuenta);
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ mensaje: 'Error de servidor' })
+        }
+    }
+);
 module.exports = router;

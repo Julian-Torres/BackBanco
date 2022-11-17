@@ -8,7 +8,7 @@ const { creaContrasena } = require('../helpers/generador')
 
 const router = Router();
 
-//crear usuario
+//crear tarjeta
 router.post('/',
     [
         check('numeroPlastico', 'Numero de tarjeta invalido').isNumeric().isLength({ max: 12}).isLength({ min: 12}),
@@ -62,5 +62,37 @@ router.get('/', [validarJWT], async function (req, res) {
         res.status(500).send({ mensaje: 'Error de servidor' })
     }
 })
+
+//-----------------------------------------------------------------------
+//editar tarjeta
+router.put('/:tarjetaId',[validarJWT], async function (req, res) {
+        try {
+            console.log(req.body);
+            //validar campos
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ mensaje: errors.array() });
+            }
+            //llamar tarjeta
+            let tarjeta = await Tarjeta.findById(req.params.tarjetaId);
+            if (!tarjeta) {
+                return res.status(400).json({ mensaje: 'Tarjeta noexiste' })
+            }
+
+            const salt = bcrypt.genSaltSync();
+            const clave = creaContrasena("ct");
+            console.log(clave);
+            tarjeta.clave = bcrypt.hashSync(clave, salt);
+            tarjeta.fechaActualizacion = new Date();
+
+            tarjeta = await tarjeta.save();
+            res.send(tarjeta);
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ mensaje: 'Error de servidor' })
+        }
+    }
+);
 
 module.exports = router;
