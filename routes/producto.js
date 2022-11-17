@@ -11,17 +11,17 @@ const router = Router();
 router.post('/',
     [
         check('usuario', 'Usuario Invalido').not().isEmpty(),
-        check('valor', 'Valor Invalido').not().isEmpty().isNumeric(),
+        check('valor', 'Valor Invalido').isNumeric().not().isEmpty(),
         check('cuotas', 'Cuotas Invalidas').isIn([12, 24, 36, 48, 60]),
         check('fechaCorte', 'fechaCorte Invalida').isIn([1, 15, 25]),
         //validar condicional solo si tipo 'Tarjeta Credito'
         oneOf([
             [
-                check('tipo', 'Tipo invalido').isIn(['Tarjeta crédito']),
+                check('tipo', 'Tipo invalido').isIn(['Tarjeta Credito']),
                 check('tarjeta', 'Falta Tarjeta').not().isEmpty()
             ], // si tipo es tarjeta credito, campo tarjeta no puede estar vacio.
             [
-                check('tipo', 'Tipo Invalido').isIn(['Crédito Vivienda', 'Crédito Vehículo', 'Crédito Estudios', 'Crédito Libre inversión', 'Seguro Vida', 'Seguro Desempleo', 'Seguro Accidente']),
+                check('tipo', 'Tipo Invalido').isIn(['Credito Vivienda', 'Credito Vehículo', 'Credito Estudios', 'Credito Libre inversión', 'Seguro Vida', 'Seguro Desempleo', 'Seguro Accidente']),
             ]
         ]),
         check('estado', 'Estado Invalido').isIn(['Activo', 'Inactivo']),
@@ -38,36 +38,23 @@ router.post('/',
             }
             //validar creacion numeroProducto unico
             let existe = true;
-            while (existe = true) {
-                const numero = creaContrasena("n");
+            while (existe == true) {
+                numero = creaContrasena("n");
                 const existeNumeroProducto = await Producto.findOne({ numeroProducto: numero });
                 if (!existeNumeroProducto) {
                     existe = false;
                     console.log(numero);
                 }
             }
-            //validar usuario existe
-            const existeUsuario = await Usuario.findOne({ documento: req.body.usuario });
-            if (!existeUsuario) {
-                return res.status(400).json({ mensaje: 'Usuario inexistente' })
-            }
-
-            //validar si tarjeta existe si es necesario
-            if (req.body.tarjeta != null) {
-                const existeTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.tarjeta });
-                if (!existeTarjeta) {
-                    return res.status(400).json({ mensaje: 'Tarjeta inexistente' })
-                }
-            }
 
             let producto = new Producto();
             producto.numeroProducto = numero;
-            producto.usuario = req.body.usuario;
+            producto.usuario = req.body.usuario._id;
             producto.tipo = req.body.tipo;
-            producto.valor = req.body.valor;
+            producto.valorTotal = req.body.valor;
             producto.cuotas = req.body.cuotas;
             producto.fechaCorte = req.body.fechaCorte;
-            producto.tarjeta = req.body.tarjeta;
+            producto.tarjeta = req.body.tarjeta._id;
             producto.estado = req.body.estado;
             producto.fechaCreacion = new Date();
             producto.fechaActualizacion = new Date();
@@ -84,7 +71,10 @@ router.post('/',
 //listar productos
 router.get('/', [validarJWT], async function (req, res) {
     try {
-        const productos = await Producto.find();
+        const productos = await Producto.find().populate([
+            { path: 'usuario', select: 'documento nombre apellido email' },
+            { path: 'tarjeta', select: 'numeroPlastico' }
+        ]);
         res.send(productos);
 
     } catch (error) {

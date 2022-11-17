@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const Cuenta = require('../models/Cuenta')
-const Usuario = require('../models/Usuario')
-const Tarjeta = require('../models/Tarjeta')
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { validarRol } = require('../middlewares/validar-rol-admin');
 const { creaContrasena } = require('../helpers/generador')

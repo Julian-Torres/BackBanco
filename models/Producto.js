@@ -21,8 +21,8 @@ const ProductoSchema = Schema({
         type: Schema.Types.ObjectId, ref: 'Usuario', required: true,
     },
     tipo: {
-        type: String, required: true, enum: ['Crédito Vivienda', 'Crédito Vehículo', 'Crédito Estudios', 'Crédito Libre inversión',
-            'Tarjeta Crédito', 'Seguro Vida', 'Seguro Desempleo', 'Seguro Accidente']
+        type: String, required: true, enum: ['Credito Vivienda', 'Credito Vehículo', 'Credito Estudios', 'Credito Libre inversión',
+            'Tarjeta Credito', 'Seguro Vida', 'Seguro Desempleo', 'Seguro Accidente']
     },
     valorTotal: {
         type: Number, required: true,
