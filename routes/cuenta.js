@@ -102,4 +102,35 @@ router.put('/:cuentaId',[check('estado', 'Estado Invalido').isIn(['Activo', 'Ina
         }
     }
 );
+
+//listar una Cuenta
+router.get('/:cuentaId',async function(req,res){
+    try {
+      const cuenta=await Cuenta.findById(req.params.cuentaId).populate([
+        { path: 'usuario', select: 'documento nombre apellido email' },
+        { path: 'tarjeta', select: 'numeroPlastico' }
+    ]);
+      if(!cuenta){
+       return res.status(404).send('Cuenta No existe');
+      }
+      res.send(cuenta);
+    } catch (error) {
+         console.log(error);
+         res.status(500).send ('Error');
+    }
+ });    
+
+//borrar Cuenta
+router.delete('/:cuentaId',[validarJWT,validarRol],async function(req,res){
+    try{
+        let cuenta=await Cuenta.findByIdAndRemove(req.params.cuentaId);
+        if (!cuenta){
+            return res.status(400).send('Cuenta no existe');
+        }
+        res.send("Cuenta Eliminada");
+    }catch(error){
+        console.log(error);
+        res.status(500).send ('Error');
+    }
+ });
 module.exports = router;

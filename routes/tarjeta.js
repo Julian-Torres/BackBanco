@@ -95,4 +95,32 @@ router.put('/:tarjetaId',[validarJWT], async function (req, res) {
     }
 );
 
+//listar una Tarjeta
+router.get('/:tarjetaId',async function(req,res){
+    try {
+      const tarjeta=await Tarjeta.findById(req.params.tarjetaId);
+      if(!tarjeta){
+       return res.status(404).send('Tatjeta No existe');
+      }
+      res.send(tarjeta);
+    } catch (error) {
+         console.log(error);
+         res.status(500).send ('Error');
+    }
+ });    
+
+//borrar Tarjeta
+router.delete('/:tarjetaId',[validarJWT,validarRol],async function(req,res){
+    try{
+        let tarjeta=await Tarjeta.findByIdAndRemove(req.params.tarjetaId);
+        if (!tarjeta){
+            return res.status(400).send('Tatjeta no existe');
+        }
+        res.send("Tarjeta Eliminada");
+    }catch(error){
+        console.log(error);
+        res.status(500).send ('Error');
+    }
+ });
+
 module.exports = router;

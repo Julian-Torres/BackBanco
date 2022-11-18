@@ -157,4 +157,36 @@ router.put('/:productoId',
         }
     }
 );
+
+//listar un Producto
+router.get('/:productoId',async function(req,res){
+    try {
+      const producto=await Producto.findById(req.params.productoId).populate([
+        { path: 'usuario', select: 'documento nombre apellido email' },
+        { path: 'tarjeta', select: 'numeroPlastico' }
+    ]);
+      if(!producto){
+       return res.status(404).send('Producto No existe');
+      }
+      res.send(producto);
+    } catch (error) {
+         console.log(error);
+         res.status(500).send ('Error');
+    }
+ });    
+
+//borrar producto
+router.delete('/:productoId',[validarJWT,validarRol],async function(req,res){
+    try{
+        let producto=await Producto.findByIdAndRemove(req.params.productoId);
+        if (!producto){
+            return res.status(400).send('Producto no existe');
+        }
+        res.send("Producto Eliminado");
+    }catch(error){
+        console.log(error);
+        res.status(500).send ('Error');
+    }
+ });
+
 module.exports = router;

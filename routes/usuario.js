@@ -95,7 +95,6 @@ router.get('/', [validarJWT], async function (req, res) {
 })
 //-----------------------------------------------------------------------
 //editar usuarios
-
 router.put('/:usuarioId', [
     check('nombre', 'Nombre Invalido').not().isEmpty(),
     check('apellido', 'Apellido Invalido').not().isEmpty(),
@@ -157,5 +156,32 @@ router.put('/:usuarioId', [
         }
     })
 
+//listar un usuario
+router.get('/:usuarioId',async function(req,res){
+    try {
+      const usuario=await Usuario.findById(req.params.usuarioId);
+      if(!usuario){
+       return res.status(404).send('Usuario No existe');
+      }
+      res.send(usuario);
+    } catch (error) {
+         console.log(error);
+         res.status(500).send ('Error');
+    }
+ });    
+
+//borrar Usuario
+router.delete('/:usuarioId',[validarJWT,validarRol],async function(req,res){
+    try{
+        let usuario=await Usuario.findByIdAndRemove(req.params.usuarioId);
+        if (!usuario){
+            return res.status(400).send('usuario no existe');
+        }
+        res.send("usuario Eliminado");
+    }catch(error){
+        console.log(error);
+        res.status(500).send ('Error');
+    }
+ });
 
 module.exports = router;
