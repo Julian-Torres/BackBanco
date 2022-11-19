@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
-const Abono = require('../models/Abono')
+const Transferencia = require('../models/Transferencia')
+const Cuenta = require('../models/Cuenta')
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { creaContrasena } = require('../helpers/generador');
-const Transferencia = require('../models/Transferencia');
+
 
 const router = Router();
 
@@ -12,7 +13,7 @@ router.post('/',
     [
         check('cuentaOrigen', 'Cuenta Origen Invalida').not().isEmpty(),
         check('cuentaDestino', 'Cuenta Destino Invalida').not().isEmpty(),
-        check('valor', 'Valor Invalido').not().isEmpty().isNumeric(),
+        check('valor', 'Valor Invalido').isNumeric().not().isEmpty(),
         validarJWT,
     ], async function (req, res) {
         try {
@@ -22,32 +23,43 @@ router.post('/',
             if (!errors.isEmpty()) {
                 return res.status(400).json({ mensaje: errors.array() });
             }
+
             //validar creacion numeroTransferencia unico
             let existe = true;
-            while (existe = true) {
-                const numero = creaContrasena("n");
+            while (existe == true) {
+                numero = creaContrasena("n");
                 const existeNumeroTransferencia = await Transferencia.findOne({ numeroTransferencia: numero });
                 if (!existeNumeroTransferencia) {
                     existe = false;
                     console.log(numero);
                 }
             }
-            //validar cuentaOrigen existe
-            const existeCuentaOrigen = await Cuenta.findOne({ numeroCuenta: req.body.cuentaOrigen });
-            if (!existeCuentaOrigen) {
+
+            //llamar cuentaOrigen 
+            let cuentaOrigen = await Cuenta.findById(req.body.cuentaOrigen._id);
+            if (!cuentaOrigen) {
                 return res.status(400).json({ mensaje: 'Revisa Cuenta Origen' })
             }
-            //validar cuentaDestino existe
-            const existeCuentaDestino = await Cuenta.findOne({ numeroCuenta: req.body.cuentaDestino });
-            if (!existeCuentaDestino) {
+            //llamar cuentaDestino
+            let cuentaDestino = await Cuenta.findById(req.body.cuentaDestino._id);
+            if (!cuentaDestino) {
                 return res.status(400).json({ mensaje: 'Revisa Cuenta Destino' })
             }
 
-            //Validar fondos cuenta origen
-            const fondosCuentaOrigen = await Cuenta.findOne({ numeroCuenta: req.body.cuentaOrigen });
-            if (!(fondosCuentaOrigen.saldo > req.body.valor)) {
+            //Validar fondos cuentaOrigen
+            if (cuentaOrigen.saldo < req.body.valor) {
                 return res.status(400).json({ mensaje: 'Fondos insuficientes' })
             }
+
+            console.log("o",cuentaOrigen.saldo);
+            console.log("d",cuentaDestino.saldo);
+            console.log("v",req.body.valor);
+            cuentaDestino.saldo = cuentaDestino.saldo+req.body.valor;
+            cuentaOrigen.saldo = cuentaOrigen.saldo-req.body.valor;
+            console.log("o",cuentaOrigen.saldo);
+            console.log("v",cuentaDestino.saldo);
+
+
 
             let transferencia = new Transferencia();
             transferencia.numeroTransferencia = numero;
@@ -57,6 +69,8 @@ router.post('/',
             transferencia.fechaCreacion = new Date();
 
             transferencia = await transferencia.save();
+            cuentaOrigen = await cuentaOrigen.save();
+            cuentaDestino = await cuentaDestino.save();
             res.send(transferencia);
 
             //falta aplicar la treansferencia entre cuentas
