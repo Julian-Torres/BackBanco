@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const { oneOf,check, validationResult } = require('express-validator');
 const Abono = require('../models/Abono')
+const Producto = require('../models/Producto')
+const Tarjeta = require('../models/Tarjeta')
 const { validarJWT } = require('../middlewares/validar-jwt');
 const { creaContrasena } = require('../helpers/generador')
 
@@ -32,10 +34,39 @@ router.post('/',
                 return res.status(400).json({ mensaje: errors.array() });
             }
 
+            //llamar Producto
+            let producto = await Producto.findById(req.body.producto._id);
+            if (!producto) {
+                return res.status(400).json({ mensaje: 'Producto no existe' })
+            }
+
+            //valor pago mayor o igual a cuota
+            valorCuota=producto.valorTotal/producto.cuotas
+            if (req.body.valor<valorCuota) {
+                return res.status(400).json({ mensaje: 'Valor de cuota insuficiente' })
+            }
+
+            //saldo pendiente
+            const abonos = await Abono.find({ producto: req.body.producto });
+            console.log(abonos);
+
+            console.log("valor",producto.valorTotal);
+            saldo = producto.valorTotal
+            if (!(abonos.length>0)) {
+            }else{
+                abonos.forEach(abono => {
+                    saldo = saldo-abono.valor
+                });
+            }
+            console.log("saldo",saldo);
+            if (saldo<=0){
+                return res.status(400).json({ mensaje: 'Este producto ya ha sido pagado' })
+            }
+
             //validar creacion numeroAbono unico
             let existe = true;
-            while (existe = true) {
-                const numero = creaContrasena("n");
+            while (existe == true) {
+                 numero = creaContrasena("n");
                 const existeNumeroAbono = await Abono.findOne({ numeroAbono: numero });
                 if (!existeNumeroAbono) {
                     existe = false;
@@ -50,7 +81,7 @@ router.post('/',
             }
 
             //validar tarjeta existe si es encesario
-            if (req.body.tarjeta != null) {
+            if (!(req.body.tarjeta == "")) {
                 const existeTarjeta = await Tarjeta.findOne({ numeroPlastico: req.body.tarjeta });
                 if (!existeTarjeta) {
                     return res.status(400).json({ mensaje: 'Tarjeta inexistente' })
@@ -60,14 +91,29 @@ router.post('/',
             let abono = new Abono();
             abono.numeroAbono = numero;
             abono.producto = req.body.producto;
-            abono.valor = req.body.valor;
+
+            //console.log(saldo);
+            console.log("pago", req.body.valor);
+
+            if (!(saldo>req.res.valor)){
+                abono.valor = saldo;
+                //console.log(abono.valor);
+                console.log('La cuota exede el saldo pendiente, te devolvemos ',req.body.valor-saldo);
+                
+            }else{
+                abono.valor = req.body.valor;
+            }
             abono.medioPago = req.body.medioPago;
-            abono.tarjeta = req.body.tarjeta;
+
+            if (!(req.body.tarjeta == "")) {
+                abono.tarjeta = req.body.tarjeta;
+            }   
             abono.fechaCreacion = new Date();
 
             abono = await abono.save();
+
+            //console.log(abono);
             res.send(abono);
-            //falta añadir el abono al producto *preguntar como se lelva registro de la cantidad total pagada*
 
         } catch (error) {
             console.log(error);
@@ -86,5 +132,21 @@ router.get('/', [validarJWT], async function (req, res) {
         res.status(500).send({ mensaje: 'Error de servidor' })
     }
 })
+
+//listar un abono
+router.get('/:abonoId',async function(req,res){
+    try {
+      const abono=await abono.findById(req.params.abonoId).populate([
+        { path: 'abono', select: 'numeroProducto tipo' },
+    ]);
+      if(!abono){
+       return res.status(404).send('Abono No existe');
+      }
+      res.send(abono);
+    } catch (error) {
+         console.log(error);
+         res.status(500).send ('Error');
+    }
+ });    
 
 module.exports = router;
