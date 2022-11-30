@@ -24,12 +24,12 @@ app.use(express.json());
 app.use('/login', AuthRoute);
 
 app.use('/usuario', UsuarioRoute);
-app.use('/abono', AbonoRoute);
-app.use('/cuenta', CuentaRoute);
-app.use('/deposito', DepositoRoute);
-app.use('/producto', ProductoRoute);
 app.use('/tarjeta', TarjetaRoute);
+app.use('/cuenta', CuentaRoute);
+app.use('/producto', ProductoRoute);
+app.use('/deposito', DepositoRoute);
 app.use('/transferencia', TransferenciaRoute);
+app.use('/abono', AbonoRoute);
 
 //server
 app.listen(port, () => {
