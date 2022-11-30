@@ -21,6 +21,8 @@ app.use(cors());
 app.use(express.json());
 
 //rutas
+app.use('/login', AuthRoute);
+
 app.use('/usuario', UsuarioRoute);
 app.use('/abono', AbonoRoute);
 app.use('/cuenta', CuentaRoute);
@@ -28,8 +30,6 @@ app.use('/deposito', DepositoRoute);
 app.use('/producto', ProductoRoute);
 app.use('/tarjeta', TarjetaRoute);
 app.use('/transferencia', TransferenciaRoute);
-
-app.use('/login', AuthRoute);
 
 //server
 app.listen(port, () => {
