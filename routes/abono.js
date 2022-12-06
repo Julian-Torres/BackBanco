@@ -136,8 +136,8 @@ router.get('/', [validarJWT], async function (req, res) {
 //listar un abono
 router.get('/:abonoId',async function(req,res){
     try {
-      const abono=await abono.findById(req.params.abonoId).populate([
-        { path: 'abono', select: 'numeroProducto tipo' },
+      const abono=await Abono.findById(req.params.abonoId).populate([
+        { path: 'producto', select: 'numeroPRoducto valorTotal' },
     ]);
       if(!abono){
        return res.status(404).send('Abono No existe');

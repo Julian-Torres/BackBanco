@@ -1,0 +1,1006 @@
+{
+	"info": {
+		"_postman_id": "5311de2a-a261-4cf8-86f5-145d9f1fc1af",
+		"name": "gestionbancaria",
+		"description": "Aplicacion backend de practica para la IUDigital",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13454111"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"julis20002009@gmail.com\", \r\n    \"contrasena\":\"1234567\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"login",
+						""
+					]
+				},
+				"description": "Este es el punto inicial de la app.\n\nEs necesario enviar una combinacion de correo y contraseña validos.\n\nDevuelve un token JWT que dura 2 horas"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearUsuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tipoDocumento\":\"CC\",\r\n    \"documento\":\"1\",\r\n    \"nombre\":\"1\",\r\n    \"apellido\":\"1\",\r\n    \"telefono\":\"1\",\r\n    \"email\":\"1@gmail.com\",\r\n    \"rol\":\"Admin\",\r\n    \"estado\":\"Activo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/usuario/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"usuario",
+						""
+					]
+				},
+				"description": "Metodo para crear un usuario.\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion\n\nTipo de documento (CC,CE,NIT,TI)  \nNúmero de documento (unico)  \nNombre  \nApellido  \nTeléfono  \nCorreo electrónico (unico)  \nRol (Administrador, asesor y cliente)  \nEstado (activo o inactivo)\n\nDevuelve el objeto guardado, añade al objeto una contraseña la cual se muestra encriptada"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarUsuarios",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/usuario/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"usuario",
+						""
+					]
+				},
+				"description": "Metodo para listar todos los usuarios\n\nEs necesario un token de autorizacion valido"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Usuario",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/usuario/637709c1037f413e09db6865",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"usuario",
+						"637709c1037f413e09db6865"
+					]
+				},
+				"description": "Metodo para listar un usuario\n\nEs necesario un token de actualizacion valido\n\nEl id del usuario va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "EditarUsuario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg2NjQ5MzgsImV4cCI6MTY2ODY3MjEzOH0.MP7AunST13TJoXeJB0Es7Bg0XRn8ywU32eX7KLR341c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\":\"julian\",\r\n    \"apellido\":\"torres\", \r\n    \"telefono\":\"5977130\",\r\n    \"email\":\"julis20002009@gmail.com\",\r\n    \"contrasenaAntigua\":\"123456\",\r\n    \"contrasenaNueva\":\"1234567\",  \r\n    \"estado\":\"Activo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/usuario/636afdd2b00217a200285760",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"usuario",
+						"636afdd2b00217a200285760"
+					]
+				},
+				"description": "Metodo para editar un usuario\n\nEs necesario un token de autorizacion valido\n\nEl id del usuario va en la url\n\nse pueden cambiar;\n\nnombre  \napellido  \ntelefono  \nemail (unico)  \ncontrasena (se envia la actual para confirmar y la nueva para actualizar)  \nestado"
+			},
+			"response": []
+		},
+		{
+			"name": "BorrarUsuario",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/usuario/637709c1037f413e09db6865",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"usuario",
+						"637709c1037f413e09db6865"
+					]
+				},
+				"description": "Metodo para Borrar un usuario\n\nEs necesario un token de autorizacion valido\n\nEl id del usuario va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearTarjeta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroPlastico\":\"000000000000\", \r\n    \"franquicia\":\"Visa\",\r\n    \"tipo\":\"Crédito\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/tarjeta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"tarjeta",
+						""
+					]
+				},
+				"description": "Metodo para crear una tarjeta.\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion\n\nNúmero de plástico (único de 12 dígitos)  \nNombre franquicia (Visa, MasterCard, American Express o Dinners Club)  \nTipo (débito o crédito)  \n\nDevuelve el objeto guardado, añade al objeto una clave de 4 digitos"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarTarjetas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/tarjeta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"tarjeta"
+					]
+				},
+				"description": "Metodo para listar todas las tarjetas\n\nEs necesario un token de autorizacion valido"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Tarjeta",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/tarjeta/63770b432920bcb4ae1e0f1e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"tarjeta",
+						"63770b432920bcb4ae1e0f1e"
+					]
+				},
+				"description": "Metodo para listar una tarjeta\n\nEs necesario un token de actualizacion valido\n\nEl id de la tarjeta va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "EditarTarjeta",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJKdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg2NTk5NzIsImV4cCI6MTY2ODY2NzE3Mn0.dSlKIl6rX51444xjLPkrVLJbt99IE9OKZBJNFuQ9CRM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/tarjeta/63744c63a0f833c9ef3eb089",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"tarjeta",
+						"63744c63a0f833c9ef3eb089"
+					]
+				},
+				"description": "Metodo para editar una tarjeta\n\nEs necesario un token de autorizacion valido\n\nEl id de la tarjeta va en la url\n\nla solicitud genera una nueva clave para la tarjeta"
+			},
+			"response": []
+		},
+		{
+			"name": "BorrarTarjeta",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/tarjeta/63770b432920bcb4ae1e0f1e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"tarjeta",
+						"63770b432920bcb4ae1e0f1e"
+					]
+				},
+				"description": "StartFragment\n\nMetodo para Borrar una tarjeta\n\nEs necesario un token de autorizacion valido\n\nEl id de la tarjeta va en la url\n\nEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearCuenta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\":{\"_id\" : \"636afdd2b00217a200285760\"},\r\n    \"tipo\":\"Corriente\", \r\n    \"saldo\":\"5000\", \r\n    \"tarjeta\":{\"_id\": \"63770de8483d9e183748741d\"}, \r\n    \"estado\":\"Activo\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/cuenta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"cuenta"
+					]
+				},
+				"description": "Metodo para crear una cuenta\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion\n\nUsuario asociado  \nTipo de cuenta (Ahorros, Corriente)  \nValor depósito inicial  \nTarjeta asociada  \nEstado (activo o inactivo)"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarCuentas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyOTYzOTgsImV4cCI6MTY3MDMwMzU5OH0.IoZ78wQMbi-wVGi9reLZBWBl_maHDeSieU_EkhKbEuQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/cuenta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"cuenta"
+					]
+				},
+				"description": "Metodo para listar todas las cuentas\n\nEs necesario un token de autorizacion valido"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Cuenta",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/cuenta/63770e11483d9e1837487421",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"cuenta",
+						"63770e11483d9e1837487421"
+					]
+				},
+				"description": "Metodo para listar una cuenta\n\nEs necesario un token de actualizacion valido\n\nEl id de la cuenta va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "EditarCuenta",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJKdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg2NTk5NzIsImV4cCI6MTY2ODY2NzE3Mn0.dSlKIl6rX51444xjLPkrVLJbt99IE9OKZBJNFuQ9CRM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"estado\":\"Inactivo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/cuenta/63745ffaaa42637970e6c54f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"cuenta",
+						"63745ffaaa42637970e6c54f"
+					]
+				},
+				"description": "Metodo para editar una cuenta\n\nEs necesario un token de autorizacion valido\n\nEl id de la cuenta va en la url\n\nse puede cambiar el estado"
+			},
+			"response": []
+		},
+		{
+			"name": "BorrarCuenta",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NDU1ODUsImV4cCI6MTY2ODc1Mjc4NX0.J4nxIkq-SlG0jOIMrRRJR45z9qGd_KEyIiCO2lymANc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/cuenta/63770e11483d9e1837487421",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"cuenta",
+						"63770e11483d9e1837487421"
+					]
+				},
+				"description": "Metodo para Borrar una cuenta\n\nEs necesario un token de autorizacion valido\n\nEl id de la cuenta va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearProductos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyNjI0NjAsImV4cCI6MTY3MDI2OTY2MH0.Nr8ZUpV0kN_2Z0hP5xU5sT41kTeFEx1wbpvwjnZGHaA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": {\"_id\" : \"636afdd2b00217a200285760\"},\r\n    \"tipo\": \"Tarjeta Credito\",\r\n    \"valorTotal\": 1000000,\r\n    \"cuotas\": 12,\r\n    \"fechaCorte\": 1,\r\n    \"tarjeta\": {\"_id\": \"63744c63a0f833c9ef3eb089\"},\r\n    \"estado\": \"Activo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/producto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"producto"
+					]
+				},
+				"description": "Metodo para crear un producto\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion\n\nUsuario asociado  \nTipo de producto (Crédito Vivienda, Vehículo, Estudios, Libre inversión, Tarjeta, Seguro Vida, Desempleo, Accidente)\\]  \nValor total producto  \nNúmero de cuotas (12, 24, 36, 48 o 60)  \nFecha pago mensual (1, 15 o 25 de cada mes)  \nTarjeta asociada (para tarjeta de crédito)  \nEstado (activo o inactivo)"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarProductos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NTQzMjYsImV4cCI6MTY2ODc2MTUyNn0.oMu4xa4XLuKksfEC8ODRFbOfHwYju4OBdK8tj-IzC7I",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/producto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"producto"
+					]
+				},
+				"description": "Metodo para listar todos los productos\n\nEs necesario un token de autorizacion valido"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Producto",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NTQzMjYsImV4cCI6MTY2ODc2MTUyNn0.oMu4xa4XLuKksfEC8ODRFbOfHwYju4OBdK8tj-IzC7I",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/producto/63772bc6c3e5021110565bd7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"producto",
+						"63772bc6c3e5021110565bd7"
+					]
+				},
+				"description": "Metodo para listar un producto\n\nEs necesario un token de actualizacion valido\n\nEl id del producto va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "EditarProducto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg2NjU4MjQsImV4cCI6MTY2ODY3MzAyNH0.CG2W0cqhnKe_TyN98n3NP2Y5sFCKmDu0rVAcZF5PvQI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cuotas\":\"24\",\r\n    \"fechaCorte\":\"15\",\r\n    \"tipo\":\"Credito Vehículo\",\r\n    \"tarjeta\": \"\",\r\n    \"estado\":\"Activo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/producto/6375d76f385e0917de118b20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"producto",
+						"6375d76f385e0917de118b20"
+					]
+				},
+				"description": "Metodo para editar un producto\n\nEs necesario un token de autorizacion valido\n\nEl id del producto va en la url\n\nse pueden cambiar;\n\ncuotas  \nfechaCorte  \ntipo\"  \ntarjeta  \nestado"
+			},
+			"response": []
+		},
+		{
+			"name": "BorrarProducto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3NTQzMjYsImV4cCI6MTY2ODc2MTUyNn0.oMu4xa4XLuKksfEC8ODRFbOfHwYju4OBdK8tj-IzC7I",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": {\"_id\" : \"636afdd2b00217a200285760\"} ,\r\n    \"valor\":\"11111\",\r\n    \"cuotas\":\"12\",\r\n    \"fechaCorte\":\"1\",\r\n    \"tipo\":\"Credito Vivienda\",\r\n    \"tarjeta\": \"\",\r\n    \"estado\":\"Activo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/producto/63772bc6c3e5021110565bd7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"producto",
+						"63772bc6c3e5021110565bd7"
+					]
+				},
+				"description": "Metodo para Borrar un producto\n\nEs necesario un token de autorizacion valido\n\nEl id del productova en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearAbono",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NjkxNTIyNzMsImV4cCI6MTY2OTE1OTQ3M30.I78ndac677qQ4TnYFexPIbYCOyAmMfLBR9WqpvHSoLA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"producto\": {\"_id\" : \"637d3e232f76e382ae9ecf57\"} ,\r\n    \"valor\":3,\r\n    \"medioPago\":\"Efectivo\",\r\n    \"tarjeta\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/abono",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"abono"
+					]
+				},
+				"description": "Metodo para crear un abono\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion:\n\nProducto  \nValor  \nMedio de pago  \ntarjeta (si es necesario)"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarAbonos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyNjMwNDcsImV4cCI6MTY3MDI3MDI0N30.Nlti933IPfooLQotTJw3ZiwxDbAYNp1Yl0IxG0M3rHU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/abono",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"abono"
+					]
+				},
+				"description": "Metodo para listar todos los abonos\n\nEs necesario un token de autorizacion valido"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Abono",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyNjMwNDcsImV4cCI6MTY3MDI3MDI0N30.Nlti933IPfooLQotTJw3ZiwxDbAYNp1Yl0IxG0M3rHU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/abono/637e7f92123fbebb609237a2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"abono",
+						"637e7f92123fbebb609237a2"
+					]
+				},
+				"description": "Metodo para listar un abono\n\nEs necesario un token de actualizacion valido\n\nEl id del abono va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearDeposito",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3OTQzNzksImV4cCI6MTY2ODgwMTU3OX0.VTqnaBoDJFzf4KRHOmbalgoE9cUHmpuBjpR4nEYhNKY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cuentaDestino\":{\"_id\": \"63745ffaaa42637970e6c54f\"},\r\n    \"valor\":\"1000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/deposito/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"deposito",
+						""
+					]
+				},
+				"description": "Metodo para crear un deposito\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion:\n\nCuenta destino  \nvalor"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarDepositos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3OTQzNzksImV4cCI6MTY2ODgwMTU3OX0.VTqnaBoDJFzf4KRHOmbalgoE9cUHmpuBjpR4nEYhNKY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/deposito/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"deposito",
+						""
+					]
+				},
+				"description": "Metodo para listar todos los depositos\n\nEs necesario un token de autorizacion valido"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Deposito",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2Njg3OTQzNzksImV4cCI6MTY2ODgwMTU3OX0.VTqnaBoDJFzf4KRHOmbalgoE9cUHmpuBjpR4nEYhNKY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/deposito/6377c9257e37712141a8931d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"deposito",
+						"6377c9257e37712141a8931d"
+					]
+				},
+				"description": "Metodo para listar un deposito\n\nEs necesario un token de actualizacion valido\n\nEl id del deposito va en la url"
+			},
+			"response": []
+		},
+		{
+			"name": "CrearTransferencia",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyOTYzOTgsImV4cCI6MTY3MDMwMzU5OH0.IoZ78wQMbi-wVGi9reLZBWBl_maHDeSieU_EkhKbEuQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cuentaOrigen\":{\"_id\": \"63745ffaaa42637970e6c54f\"},\r\n    \"cuentaDestino\":{\"_id\": \"6374681d799b806b4f0afc11\"},\r\n    \"valor\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transferencia"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "Metodo para crear un usuario.\n\nEs necesario un token de autorizacion valido\n\nRecibe la siguiente informacion\n\nCuenta origen  \nCuenta destino  \nValor"
+			},
+			"response": []
+		},
+		{
+			"name": "ListarTransferencias",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyOTYzOTgsImV4cCI6MTY3MDMwMzU5OH0.IoZ78wQMbi-wVGi9reLZBWBl_maHDeSieU_EkhKbEuQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/transferencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transferencia"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "StartFragment\n\nMetodo para listar todas las transferencias\n\nEs necesario un token de autorizacion valido\n\nEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar1Transferencia",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZhZmRkMmIwMDIxN2EyMDAyODU3NjAiLCJub21icmUiOiJqdWxpYW4iLCJyb2wiOiJBZG1pbiIsImVtYWlsIjoianVsaXMyMDAwMjAwOUBnbWFpbC5jb20iLCJpYXQiOjE2NzAyOTYzOTgsImV4cCI6MTY3MDMwMzU5OH0.IoZ78wQMbi-wVGi9reLZBWBl_maHDeSieU_EkhKbEuQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/transferencia/6377f261658219b16e0089c7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transferencia",
+						"6377f261658219b16e0089c7"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "Metodo para listar una transferencia\n\nEs necesario un token de actualizacion valido\n\nEl id de la transferencia va en la url"
+			},
+			"response": []
+		}
+	]
+}

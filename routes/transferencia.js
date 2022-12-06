@@ -73,7 +73,7 @@ router.post('/',
             cuentaDestino = await cuentaDestino.save();
             res.send(transferencia);
 
-            //falta aplicar la treansferencia entre cuentas
+            
 
         } catch (error) {
             console.log(error);
@@ -92,5 +92,19 @@ router.get('/', [validarJWT], async function (req, res) {
         res.status(500).send({ mensaje: 'Error de servidor' })
     }
 })
+
+//listar ua transferencia
+router.get('/:transferenciaId',async function(req,res){
+    try {
+      const transferencia=await Transferencia.findById(req.params.transferenciaId);
+      if(!transferencia){
+       return res.status(404).send('Transferencia No existe');
+      }
+      res.send(transferencia);
+    } catch (error) {
+         console.log(error);
+         res.status(500).send ('Error');
+    }
+ });    
 
 module.exports = router;

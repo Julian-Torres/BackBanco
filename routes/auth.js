@@ -32,14 +32,8 @@ router.post('/',
             //generar token
             const token = generarJWT(usuario);
 
-            res.json({
-                _id: usuario._id,
-                nombre: usuario.nombre,
-                apellido: usuario.apellido,
-                rol: usuario.rol,
-                email: usuario.email,
-                acces_token: token
-            });
+            res.json(token);
+
         } catch (error) {
             console.log(error);
             res.status(500).json({ mensaje: 'Error de servidor' })
