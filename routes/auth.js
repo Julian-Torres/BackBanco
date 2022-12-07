@@ -32,7 +32,13 @@ router.post('/',
             //generar token
             const token = generarJWT(usuario);
 
-            res.json(token);
+            res.json({
+                _id: usuario._id,
+                nombre: usuario.nombre,
+                rol: usuario.rol,
+                email: usuario.email,
+                acces_token: token
+            });
 
         } catch (error) {
             console.log(error);
