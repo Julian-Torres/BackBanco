@@ -35,3 +35,5 @@ app.use('/abono', AbonoRoute);
 app.listen(port, () => {
     console.log('Server ON on port', port);
 });
+
+module.exports = app;
