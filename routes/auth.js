@@ -37,7 +37,7 @@ router.post('/',
                 nombre: usuario.nombre,
                 rol: usuario.rol,
                 email: usuario.email,
-                acces_token: token
+                access_token: token
             });
 
         } catch (error) {
