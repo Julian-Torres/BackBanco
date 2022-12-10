@@ -32,6 +32,8 @@ router.post('/',
         check('nombre', 'Nombre Invalido').not().isEmpty(),
         check('apellido', 'Apellido Invalido').not().isEmpty(),
         check('telefono', 'Telefono Invalido').not().isEmpty(),
+        check('contrasena', 'Contraseña Invalida').not().isEmpty(),
+        check('confirm', 'Confirma la conrtraseña').not().isEmpty(),
         check('email', 'Email Invalido').isEmail(),
         check('rol', 'Rol Invalido').isIn(['Admin', 'Asesor', 'Cliente']),
         check('estado', 'Estado Invalido').isIn(['Activo', 'Inactivo']),
@@ -56,6 +58,13 @@ router.post('/',
                 return res.status(400).json({ mensaje: 'Email ya existe' })
             }
 
+            //validar contraseña confirmada
+            const contrasena = req.body.contrasena;
+            const confirm = req.body.confirm;
+            if (!(contrasena==confirm)) {
+                return res.status(400).json({ mensaje: 'Las contraseñas deben coincidir' })
+            }
+
             let usuario = new Usuario();
             usuario.tipoDocumento = req.body.tipoDocumento;
             usuario.documento = req.body.documento;
@@ -63,8 +72,6 @@ router.post('/',
             usuario.apellido = req.body.apellido;
             usuario.email = req.body.email;
             const salt = bcrypt.genSaltSync();
-            const contrasena = creaContrasena("c");
-            console.log(contrasena);
             usuario.contrasena = bcrypt.hashSync(contrasena, salt);
             usuario.telefono = req.body.telefono;
             usuario.rol = req.body.rol;
