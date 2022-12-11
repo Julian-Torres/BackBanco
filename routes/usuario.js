@@ -140,9 +140,13 @@ router.put('/:usuarioId', [
             usuario.email = req.body.email;
             usuario.fechaActualizacion = new Date();
 
+            const nueva=req.body.contrasenaNueva
+
+            console.log(req.body);
+
 
             //validar si se pide hacer nueva contrasena
-            if (req.body.contrasenaNueva.isEmpty) {
+            if (nueva==="") {
                 usuario = await usuario.save();
                 return res.send(usuario);
             } else {
