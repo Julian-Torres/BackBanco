@@ -138,6 +138,7 @@ router.put('/:usuarioId', [
             usuario.nombre = req.body.nombre;
             usuario.apellido = req.body.apellido;
             usuario.email = req.body.email;
+            usuario.telefono = req.body.telefono;
             usuario.fechaActualizacion = new Date();
 
             const nueva=req.body.contrasenaNueva
